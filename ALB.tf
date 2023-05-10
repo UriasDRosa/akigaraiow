@@ -5,8 +5,8 @@ resource "aws_lb" "my_load_balancer" {
   security_groups    = [aws_security_group.my_security_group.id]
 
   subnets = [
-    aws_subnet.subnet_a.id,
-    aws_subnet.subnet_b.id,
+    aws_subnet.public_subnet_1a.id,
+    aws_subnet.public_subnet_1b.id,
   ]
 
   tags = {
