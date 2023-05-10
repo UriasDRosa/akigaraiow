@@ -26,14 +26,25 @@ resource "aws_subnet" "subnet_b" {
   }
 }
 
-resource "aws_subnet" "public_subnet" {
+resource "aws_subnet" "public_subnet_1a" {
   vpc_id                  = aws_vpc.my_vpc.id
   map_public_ip_on_launch = true
   cidr_block              = "10.0.3.0/24"
   availability_zone       = "us-east-1a"
 
   tags = {
-    Name = "public-subnet-terraform"
+    Name = "public-subnet-terraform-a"
+  }
+}
+
+resource "aws_subnet" "public_subnet_1b" {
+  vpc_id                  = aws_vpc.my_vpc.id
+  map_public_ip_on_launch = true
+  cidr_block              = "10.0.4.0/24"
+  availability_zone       = "us-east-1b"
+
+  tags = {
+    Name = "public-subnet-terraform-b"
   }
 }
 
@@ -60,6 +71,11 @@ resource "aws_route" "public_subnet_route" {
 }
 
 resource "aws_route_table_association" "public_subnet_association" {
-  subnet_id      = aws_subnet.public_subnet.id
+  subnet_id      = aws_subnet.public_subnet_1a.id
+  route_table_id = aws_route_table.my_route_table.id
+}
+
+resource "aws_route_table_association" "public_subnet_association" {
+  subnet_id      = aws_subnet.public_subnet_1b.id
   route_table_id = aws_route_table.my_route_table.id
 }
